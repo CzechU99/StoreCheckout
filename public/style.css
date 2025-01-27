@@ -1,0 +1,555 @@
+* {
+  padding: 0px;
+  margin: 0px;
+  font-family: 'Noto Sans Hatran', serif;
+}
+
+.container{
+  width: 1300px;
+  min-height: 400px;
+  margin: auto;
+}
+
+.column{
+  width: 400px;
+  min-height: 300px;
+  float: left;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  margin-left: 50px;
+}
+
+.column:nth-of-type(1){
+  margin-left: 0px;
+}
+
+.box_info{
+  width: 100%;
+  height: 60px;
+  background-color: #A89F8F;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 60px;
+  float: left;
+}
+
+.box_info img{
+  width: 25px;
+  height: 25px;
+  margin-top: 17.5px;
+  margin-left: 30px;
+  float: left;
+}
+
+.column:nth-of-type(2) .box_info img{
+  width: 35px;
+  height: 35px;
+  margin-top: 12.5px;
+}
+
+.box_info_text{
+  margin-left: 10px;
+  float: left;
+}
+
+.login_button{
+  background-color: white;
+  border: 2px solid #E54444;
+  border-radius: 5px;
+  box-sizing: border-box;
+  margin-top: 10px;
+  width: 100%;
+  height: 60px;
+  color: #E54444;
+  text-align: center;
+  line-height: 60px;
+  font-size: 20px;
+  font-weight: bold;
+  float: left;
+  clear: both;
+}
+
+.login_button:hover{
+  background-color: #E54444;
+  color: white;
+  cursor: pointer;
+}
+
+.login_info{
+  width: 100%;
+  height: 20px;
+  text-align: center;
+  margin-top: 10px;
+  line-height: 20px;
+  float: left;
+}
+
+.checkbox_div{
+  width: 100%;
+  height: 25px;
+  margin-top: 20px;
+  float: left;
+}
+
+input[type="checkbox"]{
+  width: 25px;
+  height: 25px;
+  border: 1px solid gray; 
+  appearance: none; 
+  background-color: transparent; 
+  position: relative; 
+  border-radius: 5px;
+  float: left;
+}
+
+input[type="checkbox"]:hover{
+  cursor: pointer;
+}
+
+input[type="checkbox"]:checked{
+  background-color: white;
+}
+
+input[type="checkbox"]:checked::before {
+  content: '\2714'; 
+  color: #E54444; 
+  position: absolute;
+  font-size: 18px;
+  left: 4px;
+}
+
+.checkbox_div_text{
+  float: left;
+  line-height: 25px;
+  margin-left: 10px;
+  box-sizing: border-box;
+}
+
+.account_data{
+  width: 100%;
+  min-height: 50px;
+}
+
+.data_input{
+  width: 100%;
+  height: 50px;
+  font-size: 18px;
+  margin-top: 20px;
+  border-radius: 5px;
+  border: 1px solid gray;
+  padding-left: 15px;
+}
+
+select{
+  color: gray;
+}
+
+.delivery_methods{
+  width: 100%;
+  min-height: 50px;
+  margin-top: 20px;
+  margin-top: 20px;
+  margin-bottom: 40px;
+  float: left;
+  clear: both;
+}
+
+.delivery_option{
+  width: 100%;
+  height: 50px;
+  float: left;
+}
+
+input[type="radio"]{
+  width: 30px;
+  height: 30px;
+  border: 1px solid gray; 
+  appearance: none; 
+  background-color: transparent; 
+  position: relative; 
+  float: left;
+  border-radius: 50%;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+input[type="radio"]:hover{
+  cursor: pointer;
+}
+
+input[type="radio"]:checked{
+  background-color: white;
+  border: 1px solid #E54444;
+}
+
+input[type="radio"]:checked::before {
+  content: '';
+  color: #E54444; 
+  position: absolute;
+  font-size: 18px;
+  left: 4px;
+  top: 4px;
+  width: 20px;
+  height: 20px;
+  background-color: #E54444; 
+  border-radius: 50%;
+}
+
+.delivery_methods img{
+  width: 90px;
+  height: 50px;
+  float: left;
+}
+
+.delivery_methods .delivery_option:nth-of-type(2) img{
+  width: 65px;
+  height: 30px;
+  margin-top: 10px;
+  margin-left: 15px;
+  margin-right: 10px;
+}
+
+.delivery_methods .delivery_option:nth-of-type(3) img{
+  width: 65px;
+  height: 30px;
+  margin-top: 10px;
+  margin-left: 15px;
+  margin-right: 10px;
+}
+
+.delivery_option_text{
+  float: left;
+  line-height: 50px;
+}
+
+.delivery_option_prize{
+  float: right;
+  line-height: 50px;
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.payment_methods{
+  width: 100%;
+  min-height: 5px;
+  margin-top: 20px;
+  margin-top: 20px;
+  margin-bottom: 40px;
+  float: left;
+  clear: both;
+}
+
+.payment_option{
+  width: 100%;
+  height: 50px;
+  float: left;
+  display: none;
+}
+
+.payment_methods img{
+  width: 60px;
+  height: 40px;
+  float: left;
+  margin-top: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.payment_option_text{
+  float: left;
+  line-height: 50px;
+}
+
+.discount_button{
+  background-color: white;
+  border: 2px solid #A89F8F;
+  border-radius: 5px;
+  box-sizing: border-box;
+  margin-top: 10px;
+  width: 100%;
+  height: 60px;
+  color: #A89F8F;
+  text-align: center;
+  line-height: 60px;
+  font-size: 20px;
+  font-weight: bold;
+  float: left;
+  clear: both;
+}
+
+.discount_button:hover{
+  background-color: #A89F8F;
+  color: white;
+  cursor: pointer;
+}
+
+.discount_input{
+  display: none;
+  float: left;
+  clear: both;
+}
+
+.activate_discount_button{
+  background-color: white;
+  border: 2px solid #E54444;
+  border-radius: 5px;
+  box-sizing: border-box;
+  margin-top: 20px;
+  width: 100%;
+  height: 60px;
+  color: #E54444;
+  text-align: center;
+  line-height: 60px;
+  font-size: 20px;
+  font-weight: bold;
+  float: left;
+  clear: both;
+  display: none;
+}
+
+.activate_discount_button:hover{
+  background-color: #E54444;
+  color: white;
+  cursor: pointer;
+}
+
+.accept_button{
+  width: 100%;
+  height: 75px;
+  background-color: #E54444;
+  color: white;
+  float: left;
+  border-radius: 5px;
+  line-height: 75px;
+  text-align: center;
+  font-weight: bold;
+  margin-top: 30px;
+}
+
+.accept_button:hover{
+  background-color: white;
+  color: #E54444;
+  cursor: pointer;
+  border: 2px solid #E54444;
+  box-sizing: border-box;
+}
+
+.textarea_input{
+  height: 90px;
+  padding: 10px 25px;
+  resize: none;
+  color: #A89F8F;
+}
+
+.summary{
+  width: 100%;
+  height: 90px;
+  float: left;
+  border-top: 1.5px dashed lightblue;
+  border-bottom: 1.5px dashed lightblue;
+  box-sizing: border-box;
+}
+
+.summary_top{
+  width: 100%;
+  height: 40px;
+  float: left;
+  padding: 10px 20px;
+  box-sizing: border-box;
+}
+
+.subtotal_text{
+  float: left;
+}
+
+.subtotal_prize{
+  float: right;
+}
+
+.summary_bottom{
+  width: 100%;
+  height: 50px;
+  float: left;
+  padding: 0px 20px;
+  padding-bottom: 15px;
+  box-sizing: border-box;
+  font-weight: bold;
+  font-size: 25px;
+}
+
+.together_text{
+  float: left;
+}
+
+.together_prize{
+  float: right;
+}
+
+.products_list{
+  width: 100%;
+  min-height: 100px;
+  float: left;
+}
+
+.product{
+  width: 100%;
+  height: 50px;
+  float: left;
+  margin-top: 30px;
+}
+
+.product_img{
+  background-color: darkgray;
+  width: 100px;
+  height: 50px;
+  float: left;
+}
+
+.product_info{
+  float: left;
+  width: 300px;
+  height: 50px;
+}
+
+.product_name{
+  margin-top: 2px;
+  margin-left: 10px;
+  float: left;
+  font-weight: bold;
+}
+
+.product_amount{
+  margin-top: 5px;
+  margin-left: 10px;
+  float: left;
+  clear: both;
+}
+
+.product_prize{
+  margin-top: 2px;
+  float: right;
+  font-weight: bold;
+}
+
+#password_input{
+  display: none;
+}
+
+#plain_password_input{
+  display: none;
+}
+
+#second_address_input{
+  display: none;
+}
+
+#second_postal_code_input{
+  display: none;
+}
+
+#second_city_input{
+  display: none;
+}
+
+.postal_code{
+  width: 50%;
+  float: left;
+}
+
+.city{
+  width: 49%;
+  float: right;
+}
+
+.user_data{
+  width: 400px;
+  float: left;
+}
+
+.popup_login{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: none;
+}
+
+.login_form{
+  width: 450px;
+  height: 350px;
+  background-color: white;
+  border-radius: 5px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+}
+
+.close_popup{
+  width: 30px;
+  height: 30px;
+  color: black;
+  text-align: right;
+  float: right;
+  font-weight: bold;
+  box-sizing: border-box;
+  text-align: center;
+  line-height: 30px;
+}
+
+.close_popup:hover{
+  cursor: pointer;
+}
+
+.login_text{
+  width: 100%;
+  height: 50px;
+  float: left;
+  clear: both;
+  text-align: center;
+  font-weight: bold;
+  line-height: 50px;
+  font-size: 22px;
+}
+
+#captchaOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+#captchaBox {
+  background: white;
+  padding: 20px;
+  height: 74px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+@media only screen and (max-width: 1310px){
+
+  .container{
+    width: 400px;
+  }
+
+  .column{
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+  }
+
+}
