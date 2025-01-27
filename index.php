@@ -36,13 +36,13 @@
       <div class="login_info">Masz już konto? Kliknij żeby się zalogować.</div>
 
       <div class="checkbox_div">
-        <input type="checkbox" id="register_checkbox">
+        <input type="checkbox" id="register_checkbox" class="data_create_account">
         <span class="checkbox_div_text">Stwórz nowe konto</span>
       </div>
 
       <div class="account_data">
 
-        <input type="email" class="data_input" placeholder="E-mail *">
+        <input type="email" class="data_input data_users" placeholder="E-mail *">
         <input type="password" class="data_input" id="password_input" placeholder="Hasło" disabled>
         <input type="password" class="data_input" id="plain_password_input" placeholder="Potwierdź hasło" disabled>
 
@@ -51,18 +51,18 @@
       
       <div class="user_data">
 
-        <input type="text" class="data_input" placeholder="Imię *">
-        <input type="text" class="data_input" placeholder="Nazwisko *">
+        <input type="text" class="data_input data_users" placeholder="Imię *">
+        <input type="text" class="data_input data_users" placeholder="Nazwisko *">
         
-        <select class="data_input">
+        <select class="data_input data_users">
           <option>Polska</option>
           <option>Niemcy</option>
         </select>
 
-        <input type="text" class="data_input" placeholder="Adres *">
-        <input type="text" class="data_input postal_code" placeholder="Kod pocztowy *">
-        <input type="text" class="data_input city" placeholder="Miasto *">
-        <input type="text" class="data_input" placeholder="Telefon *">
+        <input type="text" class="data_input data_users" placeholder="Adres *">
+        <input type="text" class="data_input postal_code data_users" placeholder="Kod pocztowy *">
+        <input type="text" class="data_input city data_users" placeholder="Miasto *">
+        <input type="text" class="data_input data_users" placeholder="Telefon *">
 
       </div>
 
@@ -73,9 +73,9 @@
 
       <div class="user_data">
 
-        <input type="text" class="data_input" id="second_address_input" placeholder="Adres *" disabled>
-        <input type="text" class="data_input postal_code" id="second_postal_code_input" placeholder="Kod pocztowy *" disabled>
-        <input type="text" class="data_input city" id="second_city_input" placeholder="Miasto *" disabled>
+        <input type="text" class="data_input data_second_address" id="second_address_input" placeholder="Adres *" disabled>
+        <input type="text" class="data_input data_second_address postal_code" id="second_postal_code_input" placeholder="Kod pocztowy *" disabled>
+        <input type="text" class="data_input data_second_address city" id="second_city_input" placeholder="Miasto *" disabled>
 
       </div>
 
@@ -90,26 +90,21 @@
 
       <div class="delivery_methods">
 
-        <div class="delivery_option">
-          <input type="radio" id="paczkomaty_radio_btn" name="delivery_option">
-          <img src="public/images/inpost.png">
-          <span class="delivery_option_text">Paczkomaty 24/7</span>
-          <span class="delivery_option_prize">10,99 zł</span>
-        </div>
+        <?php 
+        
+          $deliveryMethods = new ShippingMethod();
+          foreach($deliveryMethods->find_all() as $deliveryMethod){
 
-        <div class="delivery_option">
-          <input type="radio" id="dpd_radio_btn" name="delivery_option">
-          <img src="public/images/dpd.png">
-          <span class="delivery_option_text">Kurier DPD</span>
-          <span class="delivery_option_prize">18,00 zł</span>
-        </div>
+            echo "<div class='delivery_option'>";
+              echo "<input type='radio' class='delivery_methods_input' value=". $deliveryMethod->id ." name='delivery_option'>";
+              echo "<img src='public/images/". $deliveryMethod->name .".png'>";
+              echo "<span class='delivery_option_text'>". $deliveryMethod->name ." 24/7</span>";
+              echo "<span class='delivery_option_prize'>". $deliveryMethod->getPriceWithComma() ."</span>";
+            echo "</div>";
 
-        <div class="delivery_option">
-          <input type="radio" id="dpd_pobranie_radio_btn" name="delivery_option">
-          <img src="public/images/dpd.png">
-          <span class="delivery_option_text">Kurier DPD pobranie</span>
-          <span class="delivery_option_prize">22,00 zł</span>
-        </div>
+          }
+        
+        ?>
 
       </div>
 
@@ -120,23 +115,20 @@
 
       <div class="payment_methods">
 
-        <div class="payment_option" id="payu_payment_option">
-          <input type="radio" id="payu_radio_btn" name="payment_option" disabled>
-          <img src="public/images/payu.png">
-          <span class="payment_option_text">PayU</span>
-        </div>
+        <?php 
+        
+          $paymentsMethod = new PaymentMethod();
+          foreach($paymentsMethod->find_all() as $paymentMethod){
 
-        <div class="payment_option" id="pobranie_payment_option">
-          <input type="radio" id="pobranie_radio_btn" name="payment_option" disabled>
-          <img src="public/images/wallet.png">
-          <span class="payment_option_text">Płatność przy odbiorze</span>
-        </div>
+            echo "<div class='payment_option' id='payu_payment_option'>";
+            echo "<input type='radio' class='payment_radio_btn' value=". $paymentMethod->id ." name='payment_option' disabled>";
+              echo "<img src='public/images/". $paymentMethod->name .".png'>";
+              echo "<span class='payment_option_text'>". $paymentMethod->name ."</span>";
+            echo "</div>";
 
-        <div class="payment_option" id="przelew_payment_option">
-          <input type="radio" id="przelew_radio_btn" name="payment_option" disabled>
-          <img src="public/images/cheque.png">
-          <span class="payment_option_text">Przelew bankowy - zwykły</span>
-        </div>
+          }
+        
+        ?>
 
       </div>
 
@@ -155,21 +147,24 @@
         <span class="box_info_text">4. PODSUMOWANIE</span>
       </div>
 
-      <div class="products_list">
+      <div data-products='<?php echo $shoppingCart->shoppingCartJson ?>' class="products_list">
 
-        <div class="product">
+        <?php 
 
-          <img src="public/ProductsImages/1.png" class="product_img">
+          foreach($shoppingCart->shoppingCart as $index => $product){
 
-          <div class="product_info">
+            echo "<div class='product'>";
+              echo "<img src='public/ProductsImages/". $product['product']->id .".png' class='product_img'>";
+              echo "<div class='product_info'>";
+                echo "<span class='product_name'>". $product['product']->name ."</span>";
+                echo "<span class='product_prize'>". $product['product']->getPriceWithComma() ."</span>";
+                echo "<span class='product_amount'>Ilość: ". $product['quantity'] ."</span>";
+              echo "</div>";
+            echo "</div>";
 
-            <span class="product_name">Testowy produkt</span>
-            <span class="product_prize">115,00 zł</span>
-            <span class="product_amount">Ilość: 1</span>
-            
-          </div>
-
-        </div>
+          };
+        
+        ?>
 
       </div>
 
@@ -178,23 +173,23 @@
         <div class="summary_top">
 
           <span class="subtotal_text">Suma częściowa</span>
-          <span class="subtotal_prize">115,00 zł</span>
+          <span class="subtotal_prize"><?php echo $shoppingCart->getSubtotalPrice() ?> zł</span>
 
         </div>
 
         <div class="summary_bottom">
 
           <span class="together_text">Łącznie</span>
-          <span class="together_prize">115,00 zł</span>
+          <span class="together_prize"><?php echo $shoppingCart->getTotalPrice() ?> zł</span>
 
         </div>
 
       </div>
 
-      <textarea class="data_input textarea_input" placeholder="Komentarz"></textarea>
+      <textarea class="data_input textarea_input data_comment" placeholder="Komentarz"></textarea>
 
       <div class="checkbox_div">
-        <input type="checkbox">
+        <input type="checkbox" class="data_newsletter">
         <span class="checkbox_div_text">Zapisz się, aby otrzymywać newsletter</span>
       </div>
 
@@ -203,7 +198,7 @@
         <span class="checkbox_div_text">Zapoznałam/em się z <a href="">Regulaminem</a> zakupów</span>
       </div>
 
-      <div class="accept_button">POTWIERDŹ ZAKUP</div>
+      <div class="accept_button" id="save_data">POTWIERDŹ ZAKUP</div>
 
     </div>
 
@@ -221,14 +216,19 @@
 
   </div>
 
+  <div class="popup_numer_zamowienia">
+
+    <div class='order_info'>
+      <div class="close_popup">&#10006;</div>
+      <div class="login_text">DZIĘKUJEMY ZA ZAMÓWIENIE!</div>
+      <div class="order_message"></div>
+      <div class="accept_button">OK</div>
+    </div>
+
+  </div>
+
   <script type="text/javascript" src="public/scripts.js"></script>
 
 </body>
 
 </html>
-
-
-
-
-
-
