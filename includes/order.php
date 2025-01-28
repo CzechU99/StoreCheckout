@@ -10,7 +10,7 @@
     public $total_price;
     public $created_at;
     public $comment;
-    public $discount_code_id = NULL;
+    public $discount_code_id;
     public $shipping_method_id;
     public $payment_method_id;
 

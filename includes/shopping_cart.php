@@ -14,22 +14,6 @@
 
     } 
 
-    public function getTotalPrice(){
-      if(floor($this->totalPrice) == $this->totalPrice) {
-        return $this->totalPrice .= ',00';
-      }else {
-        return str_replace('.', ',', $this->totalPrice);
-      }
-    }
-
-    public function getSubtotalPrice(){
-      if(floor($this->subtotalPrice) == $this->subtotalPrice) {
-        return $this->subtotalPrice .= ',00';
-      }else {
-        return str_replace('.', ',', $this->subtotalPrice);
-      }
-    }
-
     private function setSubtotalPrice(){
       foreach($this->shoppingCart as $product){
         $this->subtotalPrice += (float)$product['product']->price;

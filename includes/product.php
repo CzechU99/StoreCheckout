@@ -10,12 +10,4 @@
     public $price;
     public $created_at;
 
-    public function getPriceWithComma(){
-      if(floor($this->price) == $this->price) {
-        return $this->price .= ',00';
-      }else {
-        return str_replace('.', ',', $this->price);
-      }
-    }
-
   }

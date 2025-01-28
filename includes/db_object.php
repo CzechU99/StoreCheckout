@@ -86,37 +86,4 @@
       }
     }
 
-    public function update(){
-      global $database;
-
-      $properties = $this->cleanProperties();
-      $propertiesPairs = array();
-      foreach($properties as $key => $value){
-        $propertiesPairs[] = "{$key}='{$value}'"; 
-      }
-
-      $sql = "UPDATE ". static::$dbTable ." SET ". implode(",", $propertiesPairs) ." WHERE id='{$this->id}'";
-      $database->query($sql);
-
-      return (mysqli_affected_rows($database->connection) == 1) ? true : false;
-    }
-
-    public function delete(){
-      global $database;
-
-      $sql = "DELETE FROM ". static::$dbTable ." WHERE id = '{$this->id}' LIMIT 1";
-      $database->query($sql);
-
-      return (mysqli_affected_rows($database->connection) == 1) ? true : false;
-    }
-
-    public static function countALL(){
-      global $database;
-      $sql = "SELECT count(*) FROM " . static::$dbTable . "";
-      $result_set = $database->query($sql);
-      $row = mysqli_fetch_array($result_set);
-
-      return array_shift($row);
-    }
-
   }
