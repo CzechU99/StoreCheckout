@@ -7,28 +7,28 @@
 
   if($orderData){
 
-    $userEmail = $orderData['user']['email'];
-    $userName = $orderData['user']['name'];
-    $userSurname = $orderData['user']['surname'];
-    $userCountry = $orderData['user']['country'];
-    $userAddress = $orderData['user']['address'];
-    $userPostalCode = $orderData['user']['postal_code'];
-    $userCity = $orderData['user']['city'];
-    $userPhone = $orderData['user']['phone'];
-    $userPassword = $orderData['user']['password']; 
-    $userPlainPassword = $orderData['user']['plainPassword']; 
-    $userNewsletter = $orderData['user']['newsletter'];
+    $userEmail = $orderData['orderData']['user']['email'];
+    $userName = $orderData['orderData']['user']['name'];
+    $userSurname = $orderData['orderData']['user']['surname'];
+    $userCountry = $orderData['orderData']['user']['country'];
+    $userAddress = $orderData['orderData']['user']['address'];
+    $userPostalCode = $orderData['orderData']['user']['postalCode'];
+    $userCity = $orderData['orderData']['user']['city'];
+    $userPhone = $orderData['orderData']['user']['phone'];
+    $userPassword = $orderData['orderData']['user']['password']; 
+    $userPlainPassword = $orderData['orderData']['user']['plainPassword']; 
+    $userNewsletter = $orderData['orderData']['user']['newsletter'];
 
-    $shippingAddress = $orderData['shippingAddress']['address'];
-    $shippingCity = $orderData['shippingAddress']['city'];
-    $shippingPostalCode = $orderData['shippingAddress']['postal_code'];
+    $shippingAddress = $orderData['orderData']['shippingAddress']['address'];
+    $shippingCity = $orderData['orderData']['shippingAddress']['city'];
+    $shippingPostalCode = $orderData['orderData']['shippingAddress']['postalCode'];
 
-    $deliveryMethod = $orderData['deliveryMethod'];
-    $paymentMethod = $orderData['paymentMethod'];
-    $comment = $orderData['comment'];
-    $createdAt = $orderData['created_at'];
+    $deliveryMethod = $orderData['orderData']['shippingMethod'];
+    $paymentMethod = $orderData['orderData']['paymentMethod'];
+    $comment = $orderData['orderData']['comment'];
+    $createdAt = $orderData['orderData']['createdAt'];
 
-    foreach($orderData['products'] as $id => $product){
+    foreach($orderData['shoppingCart']['shoppingCart'] as $id => $product){
       $listOfProducts[$id] = [
           'id' => $product['product']['id'],
           'name' => $product['product']['name'],
@@ -64,7 +64,7 @@
 
     $order = new Order();
     $order->user_id = $user->id;
-    $order->total_price = 115;
+    $order->total_price = $orderData['shoppingCart']['totalPrice'];
     $order->created_at = $createdAt;
     $order->comment = $comment;
     $order->discount_code_id = 1;

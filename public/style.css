@@ -245,7 +245,7 @@ input[type="radio"]:checked::before {
   width: 100%;
   height: 50px;
   float: left;
-  display: none;
+  display: block;
 }
 
 .payment_methods img{
@@ -306,7 +306,6 @@ input[type="radio"]:checked::before {
   font-weight: bold;
   float: left;
   clear: both;
-  display: none;
 }
 
 .activate_discount_button:hover{
@@ -477,6 +476,10 @@ input[type="radio"]:checked::before {
   left: 0;
   z-index: 9;
   background-color: rgba(0, 0, 0, 0.4);
+  display: none;
+}
+
+.dp_none{
   display: none;
 }
 

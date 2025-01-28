@@ -3,16 +3,14 @@
   class ShoppingCart {
 
     public $shoppingCart = [];
-    private $subtotalPrice = 0;
-    private $totalPrice = 0;
-    public $shoppingCartJson;
+    public $subtotalPrice = 0;
+    public $totalPrice = 0;
 
     function __construct(array $productsId, array $productsQuantities){
 
       $this->addProductsToShoppingCart($productsId, $productsQuantities);
       $this->setSubtotalPrice();
       $this->setTotalPrice();
-      $this->shoppingCartJson = json_encode($this->shoppingCart);
 
     } 
 
