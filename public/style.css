@@ -573,6 +573,28 @@ input[type="radio"]:checked::before {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+.input_info{
+  width: 100%;
+  height: 20px;
+  text-align: center;
+  float: left;
+  color: red;
+}
+
+.delete_code{
+  width: 20%;
+  height: 50px;
+  float: right; 
+  margin-top: 20px;
+  line-height: 50px;
+  text-align: center;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.delete_code:hover{
+  cursor: pointer;
+}
 
 @media only screen and (max-width: 1310px){
 

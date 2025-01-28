@@ -7,6 +7,11 @@
 
   if($orderData){
 
+    $userData = $orderData['orderData']['user'];
+    $shippingAddressData = $orderData['orderData']['shippingAddress'];
+    $orderDataValues = $orderData['orderData'];
+    $shoppingCart = $orderData['shoppingCart']['shoppingCart'];
+
     $userEmail = $orderData['orderData']['user']['email'];
     $userName = $orderData['orderData']['user']['name'];
     $userSurname = $orderData['orderData']['user']['surname'];
@@ -27,15 +32,16 @@
     $paymentMethod = $orderData['orderData']['paymentMethod'];
     $comment = $orderData['orderData']['comment'];
     $createdAt = $orderData['orderData']['createdAt'];
+    // $discountCode = $orderData['orderData']['discountCode'];
 
     foreach($orderData['shoppingCart']['shoppingCart'] as $id => $product){
       $listOfProducts[$id] = [
-          'id' => $product['product']['id'],
-          'name' => $product['product']['name'],
-          'price' => $product['product']['price'],
-          'quantity' => $product['quantity'],
-          'created_at' => $product['product']['created_at']
-        ];
+        'id' => $product['product']['id'],
+        'name' => $product['product']['name'],
+        'price' => $product['product']['price'],
+        'quantity' => $product['quantity'],
+        'created_at' => $product['product']['created_at']
+      ];
     }
 
     $user = new User();
