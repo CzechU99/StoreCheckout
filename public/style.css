@@ -23,6 +23,18 @@
   margin-left: 0px;
 }
 
+.column:nth-of-type(2) .input_info:nth-of-type(3){
+  margin-bottom: 40px;
+}
+
+.column:nth-of-type(2) .input_info:nth-of-type(4){
+  margin-bottom: 40px;
+}
+
+.column:nth-of-type(2) .input_info:nth-of-type(5){
+  margin-bottom: 10px;
+}
+
 .box_info{
   width: 100%;
   height: 60px;
@@ -33,6 +45,11 @@
   font-size: 20px;
   line-height: 60px;
   float: left;
+}
+
+.box_info:nth-of-type(3){
+  margin-top: 40px;
+  clear: both;
 }
 
 .box_info img{
@@ -151,7 +168,6 @@ select{
   min-height: 50px;
   margin-top: 20px;
   margin-top: 20px;
-  margin-bottom: 40px;
   float: left;
   clear: both;
 }
@@ -236,7 +252,6 @@ input[type="radio"]:checked::before {
   min-height: 5px;
   margin-top: 20px;
   margin-top: 20px;
-  margin-bottom: 40px;
   float: left;
   clear: both;
 }
@@ -267,7 +282,7 @@ input[type="radio"]:checked::before {
   border: 2px solid #A89F8F;
   border-radius: 5px;
   box-sizing: border-box;
-  margin-top: 10px;
+  margin-top: 40px;
   width: 100%;
   height: 60px;
   color: #A89F8F;
@@ -481,6 +496,7 @@ input[type="radio"]:checked::before {
 
 .dp_none{
   display: none;
+  float: left;
 }
 
 .login_form{
@@ -579,6 +595,7 @@ input[type="radio"]:checked::before {
   text-align: center;
   float: left;
   color: red;
+  clear: both;
 }
 
 .delete_code{

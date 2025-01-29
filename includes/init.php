@@ -17,6 +17,7 @@
   require_once("discount_code.php");
   require_once("shopping_cart.php");
   require_once("payment_shipping.php");
+  require_once("functions.php");
 
   //shopping cart init - ([productId, productId], [productQuantity, productQuantity])
   $shoppingCart = new ShoppingCart([1, 2], [1, 3]);

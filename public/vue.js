@@ -9,7 +9,7 @@ const app = Vue.createApp({
         paymentMethods: [],
         shoppingCartDetails: [],
         isCaptchaSolved: false,
-        orderNumber: null,
+        orderPopupText: null,
         validCodes: [],
       },
       formStyle: {
@@ -25,7 +25,30 @@ const app = Vue.createApp({
         showOrderPopupDisplay: 'none',
       }, 
       formErrors: {
-        discountCodeError: '',
+        discountCodeError: null,
+        emailError: '',
+        passwordError: null,
+        plainPasswordError: null,
+        nameError: '',
+        surnameError: '',
+        addressError: '',
+        postalCodeError: '',
+        cityError: '',
+        phoneError: '',
+        shippingAddressError: null,
+        shippingCityError: null,
+        shippingPostalCodeError: null,
+        shippingMethodError: '',
+        paymentMethodError: '',
+        termsAcceptError: '',
+      },
+      regexRules: {
+        emailRegex: /^[^@\s]+@[^@\s]+\.[^@\s]+$/,
+        passwordRegex: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+        onlyLettersRegex: /^[A-Z][a-z]*$/,
+        bigFirstLetter: /^[A-Z].*$/,
+        postalCodeRegex: /^\d{2}-\d{3}$/,
+        phoneRegex: /^\+?\d{7,15}$/,
       },
       orderData: {
         termsAccept: false,
@@ -47,13 +70,11 @@ const app = Vue.createApp({
           postalCode: null,
           city: null,
           phone: null,
-          newsletter: null
-        },
-        shippingAddress: {
-          address: null,
-          city: null,
-          postalCode: null 
-        },
+          newsletter: null,
+          shippingAddress: null,
+          shippingCity: null,
+          shippingPostalCode: null,
+        }
       },
     };
   },
@@ -122,11 +143,19 @@ const app = Vue.createApp({
     },
     saveOrder(){
 
+      this.checkTermsAccepted();
+      this.checkShippedMethod();
+      this.checkPaymentMethod();
+
+      if(!this.checkFormValidation()) {
+        return; 
+      }
+
       const dataToSave = {
         orderData: this.orderData,
         shoppingCart: this.formConfig.shoppingCartDetails,
-        createAccount: this.formStyle.showRegisterInputs,
-        otherShippingAddress: this.formStyle.showDifferentAddressInputs,
+        createAccount: this.formConfig.createAccount,
+        otherShippingAddress: this.formConfig.differentAddress,
       };
 
       fetch('includes/add_order.php', {
@@ -136,19 +165,21 @@ const app = Vue.createApp({
       })
         .then((response) => response.json())
         .then((data) => {
-          if (data.status === 'success') {
+          if(data.status === 'success'){
             this.formStyle.showOrderPopup = true;
             this.formStyle.showOrderPopupDisplay = this.formStyle.showOrderPopupDisplay === 'none' ? 'block' : 'none';
-            this.formConfig.orderNumber = data.orderNumber;
+            this.formConfig.orderPopupText = data.orderNumber;
+          }else if(data.status === 'validError'){
+            this.formStyle.showOrderPopup = true;
+            this.formStyle.showOrderPopupDisplay = this.formStyle.showOrderPopupDisplay === 'none' ? 'block' : 'none';
+            this.formConfig.orderPopupText = data.message;
+            console.log(data.errors);
           }
         })
         .catch((error) => {
           console.error('Wystąpił błąd podczas składania zamówienia:', error);
         });
 
-    },
-    clearErrorInfo(){
-      this.formErrors.discountCodeError = "";
     },
     addDiscountCode(){
 
@@ -159,7 +190,7 @@ const app = Vue.createApp({
       if (matchingCode) {
         this.orderData.discountCodeId = matchingCode.id;
         this.orderData.discountPercentage = matchingCode.discount_percent;
-        this.formErrors.discountCodeError = "";
+        this.formErrors.discountCodeError = null;
         document.getElementsByClassName('discount_input')[0].style.width = '80%';
 
         this.formConfig.shoppingCartDetails.subtotalPrice = 0;
@@ -186,6 +217,85 @@ const app = Vue.createApp({
       this.orderData.discountPercentage = null;
       this.fetchShoppingCart();
     },
+    validInput(min = null, max = null, inputName = null, errorName = null, regex = null, required = null){
+      if(required && !this.orderData.user[inputName]){
+        return this.formErrors[errorName] = "Pole nie może być puste.";
+      }
+      if(regex){
+        const pattern = this.regexRules[regex];
+        if(pattern && !this.orderData.user[inputName].match(pattern)){
+          return this.formErrors[errorName] = "Pole ma nieprawidłowy format.";
+        }
+      }
+      if(min && this.orderData.user[inputName].length < min){
+        return this.formErrors[errorName] = "Minimalna długość wynosi " + min + " znaki.";
+      }
+      if(max && this.orderData.user[inputName].length > max){
+        return this.formErrors[errorName] = "Maksymalna długość wynosi " + max + " znaki.";
+      }
+      return this.formErrors[errorName] = null;
+    },
+    checkTermsAccepted(){
+      this.orderData.termsAccept == true ? this.formErrors.termsAcceptError = null : this.formErrors.termsAcceptError = 'Musisz zaakceptować regulamin.';
+    },
+    checkShippedMethod(){
+      this.orderData.shippingMethod != null ? this.formErrors.shippingMethodError = null : this.formErrors.shippingMethodError = 'Musisz wybrać metodę dostawy.';
+    },
+    checkPaymentMethod(){
+      if(this.orderData.shippingMethod != null){
+        this.orderData.paymentMethod != null ? this.formErrors.paymentMethodError = null : this.formErrors.paymentMethodError = 'Musisz wybrać sposób płatności.';
+      }
+    },
+    clearErrorInfo(errorName = null){
+      this.formErrors[errorName] = null;
+    },
+    clearShippingAddress(){
+      if(this.formStyle.showDifferentAddressInputs){
+        this.orderData.user.shippingAddress = null;
+        this.orderData.user.shippingCity = null;
+        this.orderData.user.shippingPostalCode = null;
+        this.formErrors.shippingAddressError = '';
+        this.formErrors.shippingCityError = '';
+        this.formErrors.shippingPostalCodeError = '';
+      }else{
+        this.formErrors.shippingAddressError = null;
+        this.formErrors.shippingCityError =null;
+        this.formErrors.shippingPostalCodeError = null;
+      }
+    },
+    clearCreateAccount(){
+      if(this.formStyle.showRegisterInputs){
+        this.orderData.user.password = null;
+        this.orderData.user.plainPassword = null;
+        this.formErrors.passwordError = '';
+        this.formErrors.plainPasswordError = '';
+      }else{
+        this.formErrors.passwordError = null;
+        this.formErrors.plainPasswordError = null;
+      }
+    },
+    validPasswordAndPlainPassword(){
+      if(this.formStyle.showRegisterInputs){
+        if(this.orderData.user.password !== this.orderData.user.plainPassword){
+          this.formErrors.plainPasswordError = "Hasła muszą być takie same!";
+        }else{
+          this.formErrors.plainPasswordError = null;
+        }
+      }
+    },
+    checkFormValidation(){
+      let isValid = true;
+      for(let field in this.formErrors){
+        if(this.formErrors[field] != null){
+          this.formStyle.showOrderPopup = true;
+          this.formStyle.showOrderPopupDisplay = this.formStyle.showOrderPopupDisplay === 'none' ? 'block' : 'none';
+          this.formConfig.orderPopupText = "Uzupełnij wszystkie dane!";
+          isValid = false;
+          break;
+        }
+      }
+      return isValid;
+    }
   },
 
 })
