@@ -41,4 +41,3 @@
 
   }
 
-  $database = new Database();

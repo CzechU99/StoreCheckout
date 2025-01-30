@@ -74,7 +74,7 @@
 
     try{
 
-      $user = new User();
+      $user = new User($database);
       $user->email = $userEmail;
       $user->password = $orderData['createAccount'] ? password_hash($userPassword, PASSWORD_DEFAULT) : null;
       $user->name = $userName;
@@ -85,16 +85,14 @@
       $user->postal_code = $userPostalCode;
       $user->newsletter = $userNewsletter;
       $user->created_at = $createdAt;
-      $user->create();
-      $user->id = $database->the_insert_id();
+      $user->save();
 
       $otherShippingAddress = new ShippingAddress();
       $otherShippingAddress->user_id = $user->id;
       $otherShippingAddress->address = $orderData['otherShippingAddress'] ? $shippingAddress : $userAddress;
       $otherShippingAddress->city = $orderData['otherShippingAddress'] ? $shippingCity : $userCity;
       $otherShippingAddress->postal_code = $orderData['otherShippingAddress'] ? $shippingPostalCode : $userPostalCode;
-      $otherShippingAddress->create();
-      $otherShippingAddress->id = $database->the_insert_id();
+      $otherShippingAddress->save();
 
       $order = new Order();
       $order->user_id = $user->id;
@@ -104,8 +102,7 @@
       $order->discount_code_id = $discountCodeId ? $discountCodeId : 1;
       $order->shipping_method_id = $deliveryMethod;
       $order->payment_method_id = $paymentMethod;
-      $order->create();
-      $order->id = $database->the_insert_id();
+      $order->save();
 
       foreach($listOfProducts as $id => $product){
         $orderDetails = new OrderDetails();
@@ -113,8 +110,7 @@
         $orderDetails->product_id = $product['id'];
         $orderDetails->quantity = $product['quantity'];
         $orderDetails->price = $product['price'];
-        $orderDetails->create();
-        $orderDetails->id = $database->the_insert_id();
+        $orderDetails->save();
       }
 
       $datePart = date('Ymd');

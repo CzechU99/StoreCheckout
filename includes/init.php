@@ -19,6 +19,8 @@
   require_once("payment_shipping.php");
   require_once("functions.php");
 
+  $database = new Database();
+
   //shopping cart init - ([productId, productId], [productQuantity, productQuantity])
   $shoppingCart = new ShoppingCart([1, 2], [1, 3]);
 

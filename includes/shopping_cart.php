@@ -31,8 +31,7 @@
 
       foreach($productsId as $index => $id){
 
-        $product = new Product();
-        $productDetails = $product->find_by_id($id);
+        $productDetails = Product::find_by_id($id);
 
         $this->shoppingCart[$index] = [
           'product' => $productDetails,

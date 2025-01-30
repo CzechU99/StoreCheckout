@@ -4,8 +4,7 @@
 
   header('Content-Type: application/json');
 
-  $shippingMethod = new ShippingMethod();
-  $shippingMethods = $shippingMethod->find_all(); 
+  $shippingMethods = ShippingMethod::find_all(); 
 
   $sql = 
     "SELECT sm.id, sm.name, sm.price, pm.id as payment_id, pm.name as pm_name 
@@ -13,7 +12,7 @@
     JOIN payment_shipping ps ON sm.id = ps.shipping_methods_id 
     JOIN payment_methods pm ON ps.payment_method_id = pm.id;";
 
-  $results = $database->connection->query($sql);
+  $results = $database->query($sql);
 
   $finalShippingMethods = [];
 

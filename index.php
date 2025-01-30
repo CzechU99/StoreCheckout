@@ -38,31 +38,72 @@
       <div class="login_info">Masz już konto? Kliknij żeby się zalogować.</div>
 
       <div class="checkbox_div">
-        <input type="checkbox" @click="toggleVisibility('showRegisterInputs'); clearCreateAccount()" v-model="formConfig.createAccount" class="data_create_account">
+        <input 
+          type="checkbox" 
+          @click="toggleVisibility('showRegisterInputs'); 
+            clearCreateAccount()" 
+          v-model="formConfig.createAccount" 
+          class="data_create_account"
+        >
         <span class="checkbox_div_text">Stwórz nowe konto</span>
       </div>
 
-      <!-- hasła nie są identyczne valid -->
       <div class="account_data"> 
 
-        <input type="email" @keyup="validInput('null', 'null', 'email', 'emailError', 'emailRegex', 'true')" v-model="orderData.user.email" class="data_input data_users" placeholder="E-mail *">
+        <input 
+          type="email" 
+          @keyup="validInput('null', 'null', 'email', 'emailError', 'emailRegex', 'true')" 
+          v-model="orderData.user.email" 
+          class="data_input data_users" 
+          placeholder="E-mail *"
+        >
         <div class="input_info" v-if="formErrors.emailError">{{formErrors.emailError}}</div>
 
-        <input type="password" @keyup="validInput('null', 'null', 'password', 'passwordError', 'passwordRegex', 'true'); validPasswordAndPlainPassword()" class="data_input dp_none" v-model="orderData.user.password" :style="{ display: formStyle.showRegisterInputsDisplay }" v-if="formStyle.showRegisterInputs" placeholder="Hasło" :disabled="!formConfig.createAccount">
+        <input 
+          type="password" 
+          @keyup="validInput('null', 'null', 'password', 'passwordError', 'passwordRegex', 'true'); 
+            validPasswordAndPlainPassword()" 
+          class="data_input dp_none" 
+          v-model="orderData.user.password" 
+          :style="{ display: formStyle.showRegisterInputsDisplay }" 
+          v-if="formStyle.showRegisterInputs" placeholder="Hasło *" 
+          :disabled="!formConfig.createAccount"
+        >
         <div class="input_info" v-if="formErrors.passwordError">{{formErrors.passwordError}}</div>
 
-        <input type="password" @keyup="validInput('null', 'null', 'plainPassword', 'plainPasswordError', 'passwordRegex', 'true'); validPasswordAndPlainPassword()" class="data_input dp_none" v-model="orderData.user.plainPassword" :style="{ display: formStyle.showRegisterInputsDisplay }" v-if="formStyle.showRegisterInputs" placeholder="Potwierdź hasło" :disabled="!formConfig.createAccount">
+        <input 
+          type="password" 
+          @keyup="validInput('null', 'null', 'plainPassword', 'plainPasswordError', 'passwordRegex', 'true'); 
+            validPasswordAndPlainPassword()" 
+          class="data_input dp_none" 
+          v-model="orderData.user.plainPassword" 
+          :style="{ display: formStyle.showRegisterInputsDisplay }" 
+          v-if="formStyle.showRegisterInputs" 
+          placeholder="Potwierdź hasło *" 
+          :disabled="!formConfig.createAccount"
+        >
         <div class="input_info" v-if="formErrors.plainPasswordError">{{formErrors.plainPasswordError}}</div>
 
       </div>
       
-      
       <div class="user_data">
 
-        <input type="text" @keyup="validInput('3', '25', 'name', 'nameError', 'onlyLettersRegex', 'true')" v-model="orderData.user.name" class="data_input data_users" placeholder="Imię *">
+        <input 
+          type="text" 
+          @keyup="validInput('3', '25', 'name', 'nameError', 'onlyLettersRegex', 'true')" 
+          v-model="orderData.user.name" 
+          class="data_input data_users" 
+          placeholder="Imię *"
+        >
         <div class="input_info" v-if="formErrors.nameError">{{formErrors.nameError}}</div>
 
-        <input type="text" @keyup="validInput('3', '25', 'surname', 'surnameError', 'onlyLettersRegex', 'true')" v-model="orderData.user.surname" class="data_input data_users" placeholder="Nazwisko *">
+        <input 
+          type="text" 
+          @keyup="validInput('3', '25', 'surname', 'surnameError', 'onlyLettersRegex', 'true')" 
+          v-model="orderData.user.surname" 
+          class="data_input data_users" 
+          placeholder="Nazwisko *"
+        >
         <div class="input_info" v-if="formErrors.surnameError">{{formErrors.surnameError}}</div>
         
         <select class="data_input data_users" v-model="orderData.user.country">
@@ -70,36 +111,89 @@
           <option>Niemcy</option>
         </select>
 
-        <input type="text" @keyup="validInput('3', '30', 'address', 'addressError', 'bigFirstLetter', 'true')" v-model="orderData.user.address" class="data_input data_users" placeholder="Adres *">
+        <input 
+          type="text" 
+          @keyup="validInput('3', '30', 'address', 'addressError', 'bigFirstLetter', 'true')" 
+          v-model="orderData.user.address" 
+          class="data_input data_users" 
+          placeholder="Adres *"
+        >
         <div class="input_info" v-if="formErrors.addressError">{{formErrors.addressError}}</div>
 
-        <input type="text" @keyup="validInput('null', 'null', 'postalCode', 'postalCodeError', 'postalCodeRegex', 'true')" v-model="orderData.user.postalCode" class="data_input postal_code data_users" placeholder="Kod pocztowy *">
+        <input 
+          type="text" 
+          @keyup="validInput('null', 'null', 'postalCode', 'postalCodeError', 'postalCodeRegex', 'true')" 
+          v-model="orderData.user.postalCode" 
+          class="data_input postal_code data_users" 
+          placeholder="Kod pocztowy *"
+        >
 
-        <input type="text" @keyup="validInput('null', 'null', 'city', 'cityError', 'onlyLettersRegex', 'true')" v-model="orderData.user.city" class="data_input city data_users" placeholder="Miasto *">
+        <input 
+          type="text" 
+          @keyup="validInput('null', 'null', 'city', 'cityError', 'onlyLettersRegex', 'true')" 
+          v-model="orderData.user.city" 
+          class="data_input city data_users" 
+          placeholder="Miasto *"
+        >
         <div class="input_info" v-if="formErrors.postalCodeError">{{formErrors.postalCodeError}}</div>
         <div class="input_info" v-if="formErrors.cityError">{{formErrors.cityError}}</div>
 
-        <input type="text" @keyup="validInput('null', 'null', 'phone', 'phoneError', 'phoneRegex', 'true')" v-model="orderData.user.phone" class="data_input data_users" placeholder="Telefon *">
+        <input 
+          type="text" 
+          @keyup="validInput('null', 'null', 'phone', 'phoneError', 'phoneRegex', 'true')" 
+          v-model="orderData.user.phone" 
+          class="data_input data_users" 
+          placeholder="Telefon *"
+        >
         <div class="input_info" v-if="formErrors.phoneError">{{formErrors.phoneError}}</div>
 
       </div>
 
       <div class="checkbox_div">
-        <input type="checkbox" v-model="formConfig.differentAddress" @click="toggleVisibility('showDifferentAddressInputs'); clearShippingAddress()">
+        <input 
+          type="checkbox" 
+          v-model="formConfig.differentAddress" 
+          @click="toggleVisibility('showDifferentAddressInputs'); 
+            clearShippingAddress()"
+        >
         <span class="checkbox_div_text">Dostawa pod inny adres</span>
       </div>
 
-      <div class="user_data dp_none" v-if="formStyle.showDifferentAddressInputs" :style="{ display: formStyle.showDifferentAddressInputsDisplay }">
+      <div 
+        class="user_data dp_none" 
+        v-if="formStyle.showDifferentAddressInputs" 
+        :style="{ display: formStyle.showDifferentAddressInputsDisplay }"
+      >
 
-        <input type="text" @keyup="validInput('3', '30', 'shippingAddress', 'shippingAddressError', 'bigFirstLetter', 'true')" v-model="orderData.user.shippingAddress" class="data_input" placeholder="Adres *" :disabled="!formConfig.differentAddress">
+        <input 
+          type="text" 
+          @keyup="validInput('3', '30', 'shippingAddress', 'shippingAddressError', 'bigFirstLetter', 'true')" 
+          v-model="orderData.user.shippingAddress" 
+          class="data_input" 
+          placeholder="Adres *" 
+          :disabled="!formConfig.differentAddress"
+        >
         <div class="input_info" v-if="formErrors.shippingAddressError">{{formErrors.shippingAddressError}}</div>
 
-        <input type="text" @keyup="validInput('null', 'null', 'shippingPostalCode', 'shippingPostalCodeError', 'postalCodeRegex', 'true')" v-model="orderData.user.shippingPostalCode" class="data_input postal_code" placeholder="Kod pocztowy *" :disabled="!formConfig.differentAddress">
+        <input 
+          type="text" 
+          @keyup="validInput('null', 'null', 'shippingPostalCode', 'shippingPostalCodeError', 'postalCodeRegex', 'true')" 
+          v-model="orderData.user.shippingPostalCode" 
+          class="data_input postal_code"
+          placeholder="Kod pocztowy *" 
+          :disabled="!formConfig.differentAddress"
+        >
 
-        <input type="text" @keyup="validInput('null', 'null', 'shippingCity', 'shippingCityError', 'onlyLettersRegex', 'true')" v-model="orderData.user.shippingCity" class="data_input city" placeholder="Miasto *" :disabled="!formConfig.differentAddress">
+        <input 
+          type="text" 
+          @keyup="validInput('null', 'null', 'shippingCity', 'shippingCityError', 'onlyLettersRegex', 'true')" 
+          v-model="orderData.user.shippingCity" 
+          class="data_input city" 
+          placeholder="Miasto *" 
+          :disabled="!formConfig.differentAddress"
+        >
         <div class="input_info" v-if="formErrors.shippingCityError">{{formErrors.shippingCityError}}</div>
         <div class="input_info" v-if="formErrors.shippingCityError">{{formErrors.shippingCityError}}</div>
-
 
       </div>
 
@@ -114,10 +208,24 @@
 
       <div class="delivery_methods">
 
-        <div v-for="shippingMethod in formConfig.shippingMethods" :key="shippingMethod.id" class="delivery_option">
-          <input type="radio" @click="clearErrorInfo('shippingMethodError')" v-model="orderData.shippingMethod" :value="shippingMethod.id" name="delivery_option" @change="handleShippingMethodChange"/>
+        <div 
+          v-for="shippingMethod in formConfig.shippingMethods" 
+          :key="shippingMethod.id" 
+          class="delivery_option"
+        >
+          <input 
+            type="radio" 
+            @click="clearErrorInfo('shippingMethodError')" 
+            v-model="orderData.shippingMethod" 
+            :value="shippingMethod.id" 
+            name="delivery_option" 
+            @change="handleShippingMethodChange"
+          />
           <img :src="'public/images/' + shippingMethod.name + '.png'" />
-          <span class="delivery_option_text">{{ shippingMethod.name }}<span v-if="shippingMethod.name.includes('Paczkomaty')"> 24/7</span></span>
+          <span class="delivery_option_text">
+            {{ shippingMethod.name }}
+            <span v-if="shippingMethod.name.includes('Paczkomaty')"> 24/7</span>
+          </span>
           <span class="delivery_option_prize">{{ formatPrice(shippingMethod.price) }} zł</span>
         </div>
 
@@ -131,8 +239,18 @@
 
       <div class="payment_methods" v-if="orderData.shippingMethod != null">
 
-        <div v-for="paymentMethod in formConfig.paymentMethods" :key="paymentMethod.id" class="payment_option">
-          <input type="radio" @click="clearErrorInfo('paymentMethodError')" v-model="orderData.paymentMethod" :value="paymentMethod.id" name="payment_option"/>
+        <div 
+          v-for="paymentMethod in formConfig.paymentMethods" 
+          :key="paymentMethod.id" 
+          class="payment_option"
+        >
+          <input 
+            type="radio" 
+            @click="clearErrorInfo('paymentMethodError')" 
+            v-model="orderData.paymentMethod" 
+            :value="paymentMethod.id" 
+            name="payment_option"
+          />
           <img :src="'public/images/' + paymentMethod.name + '.png'" />
           <span class="payment_option_text">{{ paymentMethod.name }}</span>
         </div>
@@ -140,15 +258,40 @@
       </div>
       <div class="input_info" v-if="formErrors.paymentMethodError">{{formErrors.paymentMethodError}}</div>
 
-      <div class="discount_button" @click="toggleVisibility('showDiscountCode'); fetchDiscountCodes(); clearErrorInfo('discountCodeError')">Dodaj kod rabatowy</div>
+      <div 
+        class="discount_button" 
+        @click="toggleVisibility('showDiscountCode'); 
+          fetchDiscountCodes(); 
+          clearErrorInfo('discountCodeError')"
+      >Dodaj kod rabatowy</div>
 
-      <input type="text" v-model="orderData.discountCode" class="data_input discount_input" v-if="formStyle.showDiscountCode" placeholder="Kod rabatowy" :style="{ display: formStyle.showDiscountCodeDisplay }">
+      <input 
+        type="text" 
+        v-model="orderData.discountCode" 
+        class="data_input discount_input" 
+        v-if="formStyle.showDiscountCode" 
+        placeholder="Kod rabatowy" 
+        :style="{ display: formStyle.showDiscountCodeDisplay }"
+      >
 
-      <div class="delete_code" @click="deleteDiscountCode()" v-if="orderData.discountCodeId">&#10006;</div>
+      <div 
+        class="delete_code" 
+        @click="deleteDiscountCode()" 
+        v-if="orderData.discountCodeId"
+      >&#10006;</div>
 
-      <div class="input_info discount_code" v-if="formStyle.showDiscountCode && formErrors.discountCodeError != null" :style="{ display: formStyle.showDiscountCodeDisplay }">{{formErrors.discountCodeError}}</div>
+      <div 
+        class="input_info discount_code" 
+        v-if="formStyle.showDiscountCode && formErrors.discountCodeError != null" 
+        :style="{ display: formStyle.showDiscountCodeDisplay }"
+      >{{formErrors.discountCodeError}}</div>
 
-      <div class="activate_discount_button dp_none" @click="addDiscountCode" v-if="formStyle.showDiscountCode" :style="{ display: formStyle.showDiscountCodeDisplay }">Zrealizuj kod rabatowy</div>
+      <div 
+        class="activate_discount_button dp_none" 
+        @click="addDiscountCode" 
+        v-if="formStyle.showDiscountCode" 
+        :style="{ display: formStyle.showDiscountCodeDisplay }"
+      >Zrealizuj kod rabatowy</div>
 
     </div>
 
@@ -190,7 +333,11 @@
 
       </div>
 
-      <textarea class="data_input textarea_input" v-model="orderData.comment" placeholder="Komentarz"></textarea>
+      <textarea 
+        class="data_input textarea_input" 
+        v-model="orderData.comment" 
+        placeholder="Komentarz"
+      ></textarea>
 
       <div class="checkbox_div">
         <input type="checkbox" class="data_newsletter" v-model="orderData.user.newsletter">
@@ -207,7 +354,12 @@
 
     </div>
 
-    <div class="popup_login" v-if="formStyle.showLoginPopup" @click="toggleVisibility('showLoginPopup')" :style="{ display: formStyle.showLoginPopupDisplay }">
+    <div 
+      class="popup_login" 
+      v-if="formStyle.showLoginPopup" 
+      @click="toggleVisibility('showLoginPopup')" 
+      :style="{ display: formStyle.showLoginPopupDisplay }"
+    >
 
       <div class='login_form' @click.stop>
         <div class="close_popup" @click="toggleVisibility('showLoginPopup')">&#10006;</div>
@@ -219,7 +371,12 @@
 
     </div>
 
-    <div class="popup_numer_zamowienia" v-if="formStyle.showOrderPopup" @click="toggleVisibility('showOrderPopup')" :style="{ display: formStyle.showOrderPopupDisplay }">
+    <div 
+      class="popup_numer_zamowienia" 
+      v-if="formStyle.showOrderPopup" 
+      @click="toggleVisibility('showOrderPopup')" 
+      :style="{ display: formStyle.showOrderPopupDisplay }"
+    >
 
       <div class='order_info' @click.stop>
         <div class="close_popup" @click="toggleVisibility('showOrderPopup')">&#10006;</div>
@@ -229,13 +386,9 @@
 
     </div>
 
-    <!-- <div>
-      <pre>{{ JSON.stringify($data, null, 2) }}</pre>
-    </div> -->
-
   </div>
 
-  <script type="module" src="public/vue.js"></script>
+  <script type="module" src="./public/vue.js"></script>
 
 </body>
 

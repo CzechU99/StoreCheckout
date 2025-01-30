@@ -4,8 +4,7 @@
 
   header('Content-Type: application/json');
 
-  $discountCode = new DiscountCode();
-  $discountCodes = $discountCode->find_all();
+  $discountCodes = DiscountCode::find_all();
 
   $validCodes = [];
 
