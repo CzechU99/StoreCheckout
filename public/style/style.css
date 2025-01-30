@@ -1,3 +1,10 @@
+@font-face {
+  font-family: 'Noto Sans Hatran';
+  src: url('../fonts/NotoSansHatran-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
 * {
   padding: 0px;
   margin: 0px;
@@ -301,7 +308,6 @@ input[type="radio"]:checked::before {
 }
 
 .discount_input{
-  display: none;
   float: left;
   clear: both;
 }
@@ -448,26 +454,6 @@ input[type="radio"]:checked::before {
   font-weight: bold;
 }
 
-#password_input{
-  display: none;
-}
-
-#plain_password_input{
-  display: none;
-}
-
-#second_address_input{
-  display: none;
-}
-
-#second_postal_code_input{
-  display: none;
-}
-
-#second_city_input{
-  display: none;
-}
-
 .postal_code{
   width: 50%;
   float: left;
@@ -491,12 +477,6 @@ input[type="radio"]:checked::before {
   left: 0;
   z-index: 9;
   background-color: rgba(0, 0, 0, 0.4);
-  display: none;
-}
-
-.dp_none{
-  display: none;
-  float: left;
 }
 
 .login_form{
@@ -546,12 +526,11 @@ input[type="radio"]:checked::before {
   left: 0;
   z-index: 9;
   background-color: rgba(0, 0, 0, 0.4);
-  display: none;
 }
 
 .order_info{
   width: 450px;
-  height: 250px;
+  height: 200px;
   background-color: white;
   border-radius: 5px;
   position: absolute;

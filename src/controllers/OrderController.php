@@ -1,6 +1,6 @@
 <?php
 
-  require_once('init.php');
+  require_once __DIR__ . '/../config/init.php';
 
   $data = file_get_contents('php://input');
   $orderData = json_decode($data, true);

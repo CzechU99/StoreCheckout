@@ -11,21 +11,16 @@ const app = Vue.createApp({
         isCaptchaSolved: false,
         orderPopupText: null,
         validCodes: [],
+        discountCodeError: null,
       },
       formStyle: {
         showLoginPopup: false,
-        showLoginPopupDisplay: 'none',
         showRegisterInputs: false,
-        showRegisterInputsDisplay: 'none',
         showDifferentAddressInputs: false,
-        showDifferentAddressInputsDisplay: 'none',
         showDiscountCode: false,
-        showDiscountCodeDisplay: 'none',
         showOrderPopup: false,
-        showOrderPopupDisplay: 'none',
       }, 
       formErrors: {
-        discountCodeError: null,
         emailError: '',
         passwordError: null,
         plainPasswordError: null,
@@ -80,30 +75,33 @@ const app = Vue.createApp({
   },
   mounted(){
     this.fetchData();
+    this.fetchShoppingCart();
     window.onCaptchaSuccess = this.onCaptchaSuccess;
   },
   methods: {
     toggleVisibility(field) {
       this.formStyle[field] = !this.formStyle[field];
-      this.formStyle[`${field}Display`] = this.formStyle[`${field}Display`] === 'none' ? 'block' : 'none';
+    },
+    toggleDiscountCode(){
+      if(!this.orderData.discountCodeId){
+        this.formStyle.showDiscountCode = !this.formStyle.showDiscountCode;
+      }
     },
     async fetchData(){
       try {
-        const [shippingResponse, paymentResponse, cartResponse] = await Promise.all([
-          axios.get("http://localhost/storeCheckout/api/shippingMethods.php"),
-          axios.get("http://localhost/storeCheckout/api/paymentMethods.php"),
-          axios.get("http://localhost/storeCheckout/api/shoppingCart.php")
+        const [shippingResponse, paymentResponse] = await Promise.all([
+          axios.get("http://localhost/storeCheckout/api/getShippingMethods.php"),
+          axios.get("http://localhost/storeCheckout/api/getPaymentMethods.php"),
         ]);
         this.formConfig.shippingMethods = shippingResponse.data;
         this.formConfig.paymentMethods = paymentResponse.data;
-        this.formConfig.shoppingCartDetails = cartResponse.data;
       } catch (error) {
         console.error("Błąd podczas ładowania danych:", error);
       }
     },
     async fetchDiscountCodes(){
       try {
-        const response = await axios.get("http://localhost/storeCheckout/api/discountCodes.php");
+        const response = await axios.get("http://localhost/storeCheckout/api/getDiscountCodes.php");
         this.formConfig.validCodes = response.data; 
       } catch (error) {
         console.error("Błąd podczas ładowania kodów zniżkowych:", error);
@@ -111,7 +109,7 @@ const app = Vue.createApp({
     },
     async fetchShoppingCart(){
       try {
-        const response = await axios.get("http://localhost/storeCheckout/api/shoppingCart.php");
+        const response = await axios.get("http://localhost/storeCheckout/api/getShoppingCart.php");
         this.formConfig.shoppingCartDetails = response.data; 
       } catch (error) {
         console.error("Błąd podczas ładowania koszyka:", error);
@@ -158,7 +156,7 @@ const app = Vue.createApp({
         otherShippingAddress: this.formConfig.differentAddress,
       };
 
-      fetch('includes/add_order.php', {
+      fetch('src/controllers/OrderController.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(dataToSave), 
@@ -167,11 +165,9 @@ const app = Vue.createApp({
         .then((data) => {
           if(data.status === 'success'){
             this.formStyle.showOrderPopup = true;
-            this.formStyle.showOrderPopupDisplay = this.formStyle.showOrderPopupDisplay === 'none' ? 'block' : 'none';
             this.formConfig.orderPopupText = data.orderNumber;
           }else if(data.status === 'validError'){
             this.formStyle.showOrderPopup = true;
-            this.formStyle.showOrderPopupDisplay = this.formStyle.showOrderPopupDisplay === 'none' ? 'block' : 'none';
             this.formConfig.orderPopupText = data.message;
             console.log(data.errors);
           }
@@ -190,8 +186,9 @@ const app = Vue.createApp({
       if (matchingCode) {
         this.orderData.discountCodeId = matchingCode.id;
         this.orderData.discountPercentage = matchingCode.discount_percent;
-        this.formErrors.discountCodeError = null;
+        this.formConfig.discountCodeError = null;
         document.getElementsByClassName('discount_input')[0].style.width = '80%';
+        document.getElementsByClassName('discount_input')[0].disabled = true;
 
         this.formConfig.shoppingCartDetails.subtotalPrice = 0;
         this.formConfig.shoppingCartDetails.totalPrice = 0; 
@@ -205,13 +202,14 @@ const app = Vue.createApp({
         });
 
       } else {
-        this.formErrors.discountCodeError = "Podany kod jest nieaktywny!";
+        this.formConfig.discountCodeError = "Podany kod jest nieaktywny!";
         this.orderData.discountCode = null;
       }
 
     },
     deleteDiscountCode(){
       document.getElementsByClassName('discount_input')[0].style.width = '100%';
+      document.getElementsByClassName('discount_input')[0].disabled = false;
       this.orderData.discountCode = null;
       this.orderData.discountCodeId = null;
       this.orderData.discountPercentage = null;
@@ -248,6 +246,7 @@ const app = Vue.createApp({
     },
     clearErrorInfo(errorName = null){
       this.formErrors[errorName] = null;
+      this.formConfig[errorName] = null;
     },
     clearShippingAddress(){
       if(this.formStyle.showDifferentAddressInputs){
@@ -288,8 +287,7 @@ const app = Vue.createApp({
       for(let field in this.formErrors){
         if(this.formErrors[field] != null){
           this.formStyle.showOrderPopup = true;
-          this.formStyle.showOrderPopupDisplay = this.formStyle.showOrderPopupDisplay === 'none' ? 'block' : 'none';
-          this.formConfig.orderPopupText = "Uzupełnij wszystkie dane!";
+          this.formConfig.orderPopupText = "Uzupełnij lub popraw swoje dane!";
           isValid = false;
           break;
         }

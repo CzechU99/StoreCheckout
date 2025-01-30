@@ -1,13 +1,11 @@
-<?php require_once('includes/init.php'); ?>
+<?php require_once('src/config/init.php'); ?>
 
 <html>
 <head>
 
-  <link rel="stylesheet" href="public/style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Noto+Sans+Hatran&family=Noto+Sans+Wancho&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="public/style/style.css">
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
@@ -52,7 +50,7 @@
 
         <input 
           type="email" 
-          @keyup="validInput('null', 'null', 'email', 'emailError', 'emailRegex', 'true')" 
+          @input="validInput('null', 'null', 'email', 'emailError', 'emailRegex', 'true')" 
           v-model="orderData.user.email" 
           class="data_input data_users" 
           placeholder="E-mail *"
@@ -61,11 +59,10 @@
 
         <input 
           type="password" 
-          @keyup="validInput('null', 'null', 'password', 'passwordError', 'passwordRegex', 'true'); 
+          @input="validInput('null', 'null', 'password', 'passwordError', 'passwordRegex', 'true'); 
             validPasswordAndPlainPassword()" 
-          class="data_input dp_none" 
+          class="data_input" 
           v-model="orderData.user.password" 
-          :style="{ display: formStyle.showRegisterInputsDisplay }" 
           v-if="formStyle.showRegisterInputs" placeholder="Hasło *" 
           :disabled="!formConfig.createAccount"
         >
@@ -73,11 +70,10 @@
 
         <input 
           type="password" 
-          @keyup="validInput('null', 'null', 'plainPassword', 'plainPasswordError', 'passwordRegex', 'true'); 
+          @input="validInput('null', 'null', 'plainPassword', 'plainPasswordError', 'passwordRegex', 'true'); 
             validPasswordAndPlainPassword()" 
-          class="data_input dp_none" 
+          class="data_input" 
           v-model="orderData.user.plainPassword" 
-          :style="{ display: formStyle.showRegisterInputsDisplay }" 
           v-if="formStyle.showRegisterInputs" 
           placeholder="Potwierdź hasło *" 
           :disabled="!formConfig.createAccount"
@@ -90,7 +86,7 @@
 
         <input 
           type="text" 
-          @keyup="validInput('3', '25', 'name', 'nameError', 'onlyLettersRegex', 'true')" 
+          @input="validInput('3', '25', 'name', 'nameError', 'onlyLettersRegex', 'true')" 
           v-model="orderData.user.name" 
           class="data_input data_users" 
           placeholder="Imię *"
@@ -99,7 +95,7 @@
 
         <input 
           type="text" 
-          @keyup="validInput('3', '25', 'surname', 'surnameError', 'onlyLettersRegex', 'true')" 
+          @input="validInput('3', '25', 'surname', 'surnameError', 'onlyLettersRegex', 'true')" 
           v-model="orderData.user.surname" 
           class="data_input data_users" 
           placeholder="Nazwisko *"
@@ -113,7 +109,7 @@
 
         <input 
           type="text" 
-          @keyup="validInput('3', '30', 'address', 'addressError', 'bigFirstLetter', 'true')" 
+          @input="validInput('3', '30', 'address', 'addressError', 'bigFirstLetter', 'true')" 
           v-model="orderData.user.address" 
           class="data_input data_users" 
           placeholder="Adres *"
@@ -122,7 +118,7 @@
 
         <input 
           type="text" 
-          @keyup="validInput('null', 'null', 'postalCode', 'postalCodeError', 'postalCodeRegex', 'true')" 
+          @input="validInput('null', 'null', 'postalCode', 'postalCodeError', 'postalCodeRegex', 'true')" 
           v-model="orderData.user.postalCode" 
           class="data_input postal_code data_users" 
           placeholder="Kod pocztowy *"
@@ -130,7 +126,7 @@
 
         <input 
           type="text" 
-          @keyup="validInput('null', 'null', 'city', 'cityError', 'onlyLettersRegex', 'true')" 
+          @input="validInput('null', 'null', 'city', 'cityError', 'onlyLettersRegex', 'true')" 
           v-model="orderData.user.city" 
           class="data_input city data_users" 
           placeholder="Miasto *"
@@ -140,7 +136,7 @@
 
         <input 
           type="text" 
-          @keyup="validInput('null', 'null', 'phone', 'phoneError', 'phoneRegex', 'true')" 
+          @input="validInput('null', 'null', 'phone', 'phoneError', 'phoneRegex', 'true')" 
           v-model="orderData.user.phone" 
           class="data_input data_users" 
           placeholder="Telefon *"
@@ -160,14 +156,13 @@
       </div>
 
       <div 
-        class="user_data dp_none" 
+        class="user_data" 
         v-if="formStyle.showDifferentAddressInputs" 
-        :style="{ display: formStyle.showDifferentAddressInputsDisplay }"
       >
 
         <input 
           type="text" 
-          @keyup="validInput('3', '30', 'shippingAddress', 'shippingAddressError', 'bigFirstLetter', 'true')" 
+          @input="validInput('3', '30', 'shippingAddress', 'shippingAddressError', 'bigFirstLetter', 'true')" 
           v-model="orderData.user.shippingAddress" 
           class="data_input" 
           placeholder="Adres *" 
@@ -177,7 +172,7 @@
 
         <input 
           type="text" 
-          @keyup="validInput('null', 'null', 'shippingPostalCode', 'shippingPostalCodeError', 'postalCodeRegex', 'true')" 
+          @input="validInput('null', 'null', 'shippingPostalCode', 'shippingPostalCodeError', 'postalCodeRegex', 'true')" 
           v-model="orderData.user.shippingPostalCode" 
           class="data_input postal_code"
           placeholder="Kod pocztowy *" 
@@ -186,13 +181,13 @@
 
         <input 
           type="text" 
-          @keyup="validInput('null', 'null', 'shippingCity', 'shippingCityError', 'onlyLettersRegex', 'true')" 
+          @input="validInput('null', 'null', 'shippingCity', 'shippingCityError', 'onlyLettersRegex', 'true')" 
           v-model="orderData.user.shippingCity" 
           class="data_input city" 
           placeholder="Miasto *" 
           :disabled="!formConfig.differentAddress"
         >
-        <div class="input_info" v-if="formErrors.shippingCityError">{{formErrors.shippingCityError}}</div>
+        <div class="input_info" v-if="formErrors.shippingPostalCodeError">{{formErrors.shippingPostalCodeError}}</div>
         <div class="input_info" v-if="formErrors.shippingCityError">{{formErrors.shippingCityError}}</div>
 
       </div>
@@ -260,9 +255,7 @@
 
       <div 
         class="discount_button" 
-        @click="toggleVisibility('showDiscountCode'); 
-          fetchDiscountCodes(); 
-          clearErrorInfo('discountCodeError')"
+        @click="toggleDiscountCode(); fetchDiscountCodes(); clearErrorInfo('discountCodeError')"
       >Dodaj kod rabatowy</div>
 
       <input 
@@ -271,7 +264,6 @@
         class="data_input discount_input" 
         v-if="formStyle.showDiscountCode" 
         placeholder="Kod rabatowy" 
-        :style="{ display: formStyle.showDiscountCodeDisplay }"
       >
 
       <div 
@@ -282,15 +274,13 @@
 
       <div 
         class="input_info discount_code" 
-        v-if="formStyle.showDiscountCode && formErrors.discountCodeError != null" 
-        :style="{ display: formStyle.showDiscountCodeDisplay }"
-      >{{formErrors.discountCodeError}}</div>
+        v-if="formStyle.showDiscountCode && formConfig.discountCodeError != null" 
+      >{{formConfig.discountCodeError}}</div>
 
       <div 
-        class="activate_discount_button dp_none" 
+        class="activate_discount_button" 
         @click="addDiscountCode" 
         v-if="formStyle.showDiscountCode" 
-        :style="{ display: formStyle.showDiscountCodeDisplay }"
       >Zrealizuj kod rabatowy</div>
 
     </div>
@@ -305,7 +295,7 @@
       <div class="products_list">
 
         <div class='product' v-for="item in formConfig.shoppingCartDetails.shoppingCart" :key="item.product.id">
-          <img :src="'public/ProductsImages/'+ item.product.id +'.png'" class='product_img'>
+          <img :src="'public/images/productsImages/'+ item.product.id +'.png'" class='product_img'>
           <div class='product_info'>
             <span class='product_name'>{{item.product.name}}</span>
             <span class='product_prize'>{{formatPrice(item.product.price)}}</span>
@@ -358,7 +348,6 @@
       class="popup_login" 
       v-if="formStyle.showLoginPopup" 
       @click="toggleVisibility('showLoginPopup')" 
-      :style="{ display: formStyle.showLoginPopupDisplay }"
     >
 
       <div class='login_form' @click.stop>
@@ -375,7 +364,6 @@
       class="popup_numer_zamowienia" 
       v-if="formStyle.showOrderPopup" 
       @click="toggleVisibility('showOrderPopup')" 
-      :style="{ display: formStyle.showOrderPopupDisplay }"
     >
 
       <div class='order_info' @click.stop>
@@ -388,7 +376,7 @@
 
   </div>
 
-  <script type="module" src="./public/vue.js"></script>
+  <script type="module" src="./public/scripts/vue.js"></script>
 
 </body>
 
