@@ -3,7 +3,7 @@
   use PHPUnit\Framework\Attributes\DataProvider;
   use PHPUnit\Framework\TestCase;
 
-  require_once('./src/functions/validation.php');
+  require_once('./php/functions/validation.php');
 
   class DataValidationTest extends TestCase{
 

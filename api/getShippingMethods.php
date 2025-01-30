@@ -1,6 +1,6 @@
 <?php
 
-  require_once __DIR__ . '/../src/config/init.php';
+  require_once __DIR__ . '/../php/config/init.php';
 
   header('Content-Type: application/json');
 

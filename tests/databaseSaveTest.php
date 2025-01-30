@@ -2,9 +2,9 @@
 
   use PHPUnit\Framework\TestCase;
 
-  require_once('./src/config/Database.php');
-  require_once('./src/config/DbObject.php');
-  require_once('./src/models/User.php');
+  require_once('./php/config/Database.php');
+  require_once('./php/config/DbObject.php');
+  require_once('./php/models/User.php');
 
   class DatabaseSaveTest extends TestCase{
 

@@ -6,7 +6,7 @@
 
     public $connection;
 
-    function __construct(){
+    function __construct($mysqli = true){
       $this->open_db_connection();
     }
 
