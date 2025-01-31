@@ -196,7 +196,7 @@ import { storeToRefs } from 'pinia';
       validPasswordAndPlainPassword(){
         if(this.formStyle.showRegisterInputs){
           if(this.orderData.user.password !== this.orderData.user.plainPassword){
-            this.formErrors.plainPasswordError = "Hasła muszą być takie same!";
+            this.formErrors.plainPasswordError = "Hasła muszą być takie same! Tylko cyfry i litery, minimum jedna cyfra i jedna duża litera.";
           }else{
             this.formErrors.plainPasswordError = null;
           }

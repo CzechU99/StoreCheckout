@@ -45,8 +45,18 @@ import { storeToRefs } from 'pinia';
         this.checkShippedMethod();
         this.checkPaymentMethod();
 
-        if(!this.checkFormValidation()) {
-          return; 
+        if(!this.checkFormValidation()){
+          for(const key in this.formErrors){
+            if(this.formErrors[key] === ''){
+              if(key != 'shippingCityError' && key != 'cityError' && key != 'paymentMethodError'){
+                this.formErrors[key] = 'Uzupełnij dane!';
+              }
+              if(key == 'paymentMethodError' && this.orderData.shippingMethod != null){
+                this.formErrors[key] = 'Uzupełnij dane!';
+              }
+            }
+          }
+          return;
         }
 
         const dataToSave = {

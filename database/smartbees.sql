@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sty 27, 2025 at 09:16 AM
+-- Generation Time: Sty 31, 2025 at 12:27 PM
 -- Wersja serwera: 10.4.32-MariaDB
 -- Wersja PHP: 8.2.12
 
@@ -29,9 +29,9 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `discount_codes` (
   `id` int(11) NOT NULL,
-  `code` varchar(255) NOT NULL,
-  `discount_percent` int(11) NOT NULL,
-  `valid_until` datetime NOT NULL
+  `code` varchar(255) DEFAULT NULL,
+  `discount_percent` int(11) DEFAULT NULL,
+  `valid_until` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -39,8 +39,9 @@ CREATE TABLE `discount_codes` (
 --
 
 INSERT INTO `discount_codes` (`id`, `code`, `discount_percent`, `valid_until`) VALUES
-(1, 'BF2025', 15, '2025-12-31 23:59:59'),
-(2, 'BF2024', 15, '2024-12-31 23:59:59');
+(1, NULL, NULL, NULL),
+(2, 'BF2024', 15, '2024-12-31 23:59:59'),
+(3, 'BF2025', 15, '2025-12-31 23:59:59');
 
 -- --------------------------------------------------------
 
@@ -59,6 +60,13 @@ CREATE TABLE `orders` (
   `payment_method_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `user_id`, `total_price`, `created_at`, `comment`, `discount_code_id`, `shipping_method_id`, `payment_method_id`) VALUES
+(137, 160, 414.97, '2025-01-31 11:27:14', '', 1, 2, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -72,6 +80,14 @@ CREATE TABLE `order_details` (
   `quantity` int(11) NOT NULL,
   `price` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `order_details`
+--
+
+INSERT INTO `order_details` (`id`, `order_id`, `product_id`, `quantity`, `price`) VALUES
+(175, 137, 1, 1, 115),
+(176, 137, 2, 3, 99.99);
 
 -- --------------------------------------------------------
 
@@ -96,6 +112,29 @@ INSERT INTO `payment_methods` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struktura tabeli dla tabeli `payment_shipping`
+--
+
+CREATE TABLE `payment_shipping` (
+  `payment_method_id` int(11) NOT NULL,
+  `shipping_methods_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `payment_shipping`
+--
+
+INSERT INTO `payment_shipping` (`payment_method_id`, `shipping_methods_id`) VALUES
+(1, 1),
+(1, 2),
+(2, 3),
+(2, 1),
+(3, 1),
+(3, 2);
+
+-- --------------------------------------------------------
+
+--
 -- Struktura tabeli dla tabeli `products`
 --
 
@@ -111,7 +150,8 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `price`, `created_at`) VALUES
-(1, 'Testowy produkt', 115, '2025-01-25 20:23:52');
+(1, 'Testowy produkt', 115, '2025-01-25 20:23:52'),
+(2, 'Testowy produkt 2', 99.99, '2025-01-27 12:26:41');
 
 -- --------------------------------------------------------
 
@@ -126,6 +166,13 @@ CREATE TABLE `shipping_addresses` (
   `city` varchar(255) NOT NULL,
   `postal_code` varchar(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `shipping_addresses`
+--
+
+INSERT INTO `shipping_addresses` (`id`, `user_id`, `address`, `city`, `postal_code`) VALUES
+(147, 160, 'Dadwasdd', 'Dwadsadwa', '22-222');
 
 -- --------------------------------------------------------
 
@@ -144,7 +191,7 @@ CREATE TABLE `shipping_methods` (
 --
 
 INSERT INTO `shipping_methods` (`id`, `name`, `price`) VALUES
-(1, 'Paczkomaty 24/7', 10.99),
+(1, 'Paczkomaty', 10.99),
 (2, 'Kurier DPD', 18),
 (3, 'Kurier DPD pobranie', 22);
 
@@ -167,6 +214,15 @@ CREATE TABLE `users` (
   `newsletter` tinyint(1) NOT NULL,
   `created_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `email`, `password`, `name`, `surname`, `phone`, `address`, `city`, `postal_code`, `newsletter`, `created_at`) VALUES
+(1, 'asd', '', 'asd', 'asd', 'asd', 'asd', 'asd', 'da', 0, '2025-01-27 10:58:17'),
+(2, 'sad', '', 'asdasd', 'asdsadsa', 'asdsa', 'sadsad', 'asdsad', 'asdsad', 0, '2025-01-27 11:05:07'),
+(160, 'test@test.com', '', 'Dasdad', 'Dadads', '892379123', 'Dadwasdd', 'Dwadsadwa', '22-222', 0, '2025-01-31 11:27:14');
 
 --
 -- Indeksy dla zrzutów tabel
@@ -203,6 +259,13 @@ ALTER TABLE `payment_methods`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indeksy dla tabeli `payment_shipping`
+--
+ALTER TABLE `payment_shipping`
+  ADD KEY `payment_method_id` (`payment_method_id`),
+  ADD KEY `shipping_methods_id` (`shipping_methods_id`);
+
+--
 -- Indeksy dla tabeli `products`
 --
 ALTER TABLE `products`
@@ -235,19 +298,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `discount_codes`
 --
 ALTER TABLE `discount_codes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=138;
 
 --
 -- AUTO_INCREMENT for table `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=177;
 
 --
 -- AUTO_INCREMENT for table `payment_methods`
@@ -259,13 +322,13 @@ ALTER TABLE `payment_methods`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `shipping_addresses`
 --
 ALTER TABLE `shipping_addresses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=148;
 
 --
 -- AUTO_INCREMENT for table `shipping_methods`
@@ -277,7 +340,7 @@ ALTER TABLE `shipping_methods`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=161;
 
 --
 -- Constraints for dumped tables
@@ -298,6 +361,13 @@ ALTER TABLE `orders`
 ALTER TABLE `order_details`
   ADD CONSTRAINT `order_details_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `order_details_ibfk_2` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `payment_shipping`
+--
+ALTER TABLE `payment_shipping`
+  ADD CONSTRAINT `payment_shipping_ibfk_1` FOREIGN KEY (`shipping_methods_id`) REFERENCES `shipping_methods` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `payment_shipping_ibfk_2` FOREIGN KEY (`payment_method_id`) REFERENCES `payment_methods` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `shipping_addresses`
