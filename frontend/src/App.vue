@@ -10,7 +10,7 @@
 
 <template>
   
-  <Captcha />
+  <!-- <Captcha /> -->
 
   <div class="container">
 

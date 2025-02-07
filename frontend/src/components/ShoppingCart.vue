@@ -44,6 +44,8 @@ import { useOrderStore } from '@/stores/orderStore';
 import { storeToRefs } from 'pinia';
 import axios from 'axios';
 
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   export default{
     setup(){
       const orderDataStore = useOrderStore();
@@ -65,7 +67,7 @@ import axios from 'axios';
       },
       async fetchShoppingCart(){
         try {
-          const response = await axios.get("http://localhost/storecheckout/api/getShoppingCart.php");
+          const response = await axios.get(`${API_BASE_URL}/api/getShoppingCart.php`);
           this.formConfig.shoppingCartDetails = response.data; 
         } catch (error) {
           console.error("Błąd podczas ładowania koszyka:", error);

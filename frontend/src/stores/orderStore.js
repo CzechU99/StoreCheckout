@@ -50,7 +50,6 @@ export const useOrderStore = defineStore('order', {
       shippingMethod: null,
       paymentMethod: null,
       comment: null,
-      createdAt: new Date().toISOString(),
       discountCode: null,
       discountCodeId: null,
       discountPercentage: null,

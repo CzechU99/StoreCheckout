@@ -1,9 +1,5 @@
 <?php 
 
-  defined('DS') ? null : define('DS', DIRECTORY_SEPARATOR);
-  define('SITE_ROOT', DS . 'xampp' . DS . 'htdocs' . DS . 'storecheckout');
-  defined('INCLUDES_PATH') ? null : define('INCLUDES_PATH', SITE_ROOT . DS . 'src');
-
   require_once __DIR__ . '/newDbConfig.php';
   require_once __DIR__ . '/Database.php';
   require_once __DIR__ . '/DbObject.php';
@@ -18,7 +14,6 @@
   require_once __DIR__ . '/../models/DiscountCode.php';
   require_once __DIR__ . '/../models/PaymentShipping.php';
   require_once __DIR__ . '/../functions/validation.php';
-  require_once __DIR__ . '/../functions/autoloader.php';
 
   $database = new Database();
 

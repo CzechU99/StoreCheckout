@@ -26,6 +26,8 @@
 import { useOrderStore } from '@/stores/orderStore';
 import { storeToRefs } from 'pinia';
 
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   export default{
     setup(){
       const orderDataStore = useOrderStore();
@@ -66,7 +68,7 @@ import { storeToRefs } from 'pinia';
           otherShippingAddress: this.formConfig.differentAddress,
         };
 
-        fetch('http://localhost/StoreCheckout/php/controllers/OrderController.php', {
+        fetch(`${API_BASE_URL}/php/controllers/OrderController.php`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(dataToSave), 

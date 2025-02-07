@@ -26,7 +26,7 @@
     $deliveryMethod = $orderData['orderData']['shippingMethod'];
     $paymentMethod = $orderData['orderData']['paymentMethod'];
     $comment = $orderData['orderData']['comment'];
-    $createdAt = $orderData['orderData']['createdAt'];
+    $createdAt = date('Y-m-d H:i:s');
     $discountCodeId = $orderData['orderData']['discountCodeId'];
     $termsAccept = $orderData['orderData']['termsAccept'];
 

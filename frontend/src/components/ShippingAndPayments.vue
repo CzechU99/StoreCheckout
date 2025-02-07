@@ -65,6 +65,8 @@ import { useOrderStore } from '@/stores/orderStore';
 import { storeToRefs } from 'pinia';
 import axios from 'axios';
 
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   export default{
     setup(){
       const orderDataStore = useOrderStore();
@@ -80,8 +82,8 @@ import axios from 'axios';
       async fetchData(){
         try {
           const [shippingResponse, paymentResponse] = await Promise.all([
-            axios.get("http://localhost/storecheckout/api/getShippingMethods.php"),
-            axios.get("http://localhost/storecheckout/api/getPaymentMethods.php"),
+            axios.get(`${API_BASE_URL}/api/getShippingMethods.php`),
+            axios.get(`${API_BASE_URL}/api/getPaymentMethods.php`),
           ]);
           this.formConfig.shippingMethods = shippingResponse.data;
           this.formConfig.paymentMethods = paymentResponse.data;
