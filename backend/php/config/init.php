@@ -15,6 +15,7 @@
   require_once __DIR__ . '/../models/PaymentShipping.php';
   require_once __DIR__ . '/../functions/validation.php';
 
+  global $database;
   $database = new Database();
 
   //shopping cart init - ([productId, productId], [productQuantity, productQuantity])
